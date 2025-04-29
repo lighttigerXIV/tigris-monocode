@@ -25,8 +25,12 @@ fn main() {
     let request = get_extension_request().get_results_request.unwrap();
     let search_query = get_search_query(&request.search_text);
     let mut results = Vec::<SearchResult>::new();
-    let sniffer = Sniffer::new();
+
+    let sniffer = Sniffer::new()
+        .set_do_hamming_match(false)
+        .set_do_levenshtein_match(false);
     let panther_palette = get_panther_palette();
+
     let lynx_palette = get_lynx_palette();
 
     if let Some(keyword) = search_query.keyword.clone() {
