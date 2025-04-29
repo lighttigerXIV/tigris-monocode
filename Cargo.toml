@@ -1,0 +1,9 @@
+[package]
+name = "tigris-monocode-scheme"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+monocode-scheme-rs = { git = "https://github.com/Mono-Code-Scheme/scheme-rs", version = "0.1.0" }
+sniffer-rs = "1.1.2"
+tigris-rs = { git = "https://github.com/Whiskers-Apps/tigris-rs", version = "0.1.0", features = ["extension"] }
