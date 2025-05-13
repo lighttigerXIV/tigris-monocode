@@ -1,11 +1,11 @@
-use std::{env, path::PathBuf, process::exit};
+use std::{env, path::PathBuf};
 
 use monocode_scheme_rs::scheme::{get_lynx_palette, get_panther_palette};
 use sniffer_rs::sniffer::Sniffer;
-use tigris_rs::features::{
+use tigris_core::features::{
     actions::{CopyTextAction, ResultAction},
-    api::{get_extension_request, send_search_results},
-    search::get_search_query,
+    api::{get_request, return_search_results},
+    search::SearchQuery,
     search_results::SearchResult,
 };
 
@@ -22,8 +22,8 @@ pub fn get_lynx_icon(name: &str) -> PathBuf {
 }
 
 fn main() {
-    let request = get_extension_request().get_results_request.unwrap();
-    let search_query = get_search_query(&request.search_text);
+    let request = get_request().unwrap().get_results_request.unwrap();
+    let search_query = SearchQuery::from(&request.search_text);
     let mut results = Vec::<SearchResult>::new();
 
     let sniffer = Sniffer::new()
@@ -61,8 +61,7 @@ fn main() {
                 }
             }
 
-            send_search_results(&results);
-            exit(0);
+            return_search_results(&results);
         }
     }
 
@@ -92,6 +91,5 @@ fn main() {
         }
     }
 
-    send_search_results(&results);
-    exit(0);
+    return_search_results(&results);
 }
